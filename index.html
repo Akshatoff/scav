@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Spotify Blend – Clone</title>
+  <style>
+    :root {
+      --bg: #0b0b0f;
+      --bg-elev: #16161d;
+      --text: #e5e7eb;
+      --muted: #9da3af;
+      --accent: #1ed760;
+      --accent-2: #22c55e;
+      --row: #14141a;
+      --row-hover: #22222b;
+      --divider: #2a2a35;
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html,
+    body {
+      height: 100%
+    }
+
+    body {
+      margin: 0;
+      font: 14px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial;
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    .app {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 24px 80px
+    }
+
+    .header {
+      display: flex;
+      align-items: flex-end;
+      gap: 24px;
+      padding: 24px 0 12px
+    }
+
+    .cover {
+      width: 88px;
+      height: 88px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #ef4444, #f59e0b, #10b981, #3b82f6);
+      display: grid;
+      place-items: center;
+    }
+
+    .title-wrap {
+      flex: 1
+    }
+
+    .title {
+      font-size: clamp(22px, 3.6vw, 40px);
+      font-weight: 800;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 18px 0 8px
+    }
+
+    .btn-play {
+      width: 28px;
+      height: 28px;
+      border: 0;
+      border-radius: 50%;
+      background: var(--accent);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .table {
+      margin-top: 10px;
+      border-top: 1px solid var(--divider)
+    }
+
+    .th,
+    .tr {
+      display: grid;
+      grid-template-columns: 40px 1.8fr 1.3fr 1.2fr 60px 40px;
+      align-items: center;
+      gap: 10px
+    }
+
+    .th {
+      color: var(--muted);
+      padding: 12px 8px
+    }
+
+    .tr {
+      padding: 10px 8px;
+      border-radius: 8px;
+      position: relative;
+      cursor: grab;
+    }
+
+    .tr:hover {
+      background: var(--row-hover)
+    }
+
+    .td {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0
+    }
+
+    .td .thumb {
+      width: 40px;
+      height: 40px;
+      border-radius: 6px;
+      overflow: hidden;
+      flex: 0 0 auto;
+      background: #111
+    }
+
+    .td .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover
+    }
+
+    .meta {
+      min-width: 0
+    }
+
+    .title-song {
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis
+    }
+
+    .sub {
+      color: var(--muted);
+      font-size: 12.5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis
+    }
+
+    .added-by {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted)
+    }
+
+    .avatar {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #374151;
+      display: inline-grid;
+      place-items: center;
+      font-size: 11px
+    }
+
+    .duration {
+      color: var(--muted)
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <div class="header">
+      <div class="cover"></div>
+      <div class="title-wrap">
+        <div class="title">Hellobro1234 + 9 others</div>
+      </div>
+    </div>
+
+    <div class="table">
+      <div class="th">
+        <div class="muted">#</div>
+        <div class="muted">Title</div>
+        <div class="muted">Album</div>
+        <div class="muted">Added by</div>
+        <div class="muted" style="text-align:right; padding-right:8px">⏱</div>
+        <div class="muted">▶</div>
+      </div>
+      <div class="divider"></div>
+      <div id="songList">
+        <div class="tr" draggable="true" data-src="songs/song1.mp3">
+          <div class="muted">1</div>
+          <div class="td">
+            <div class="thumb"></div>
+            <div class="meta">
+              <div class="title-song">Clue 1</div>
+              <div class="sub">By The Goat</div>
+            </div>
+          </div>
+          <div class="sub">Assit Main Cab</div>
+          <div class="added-by">
+            <div class="avatar">A</div> Aditya Choithani
+          </div>
+          <div class="duration">3:10</div>
+          <button class="btn-play">▶</button>
+        </div>
+
+        <div class="tr" draggable="true" data-src="songs/song2.mp3">
+          <div class="muted">2</div>
+          <div class="td">
+            <div class="thumb"></div>
+            <div class="meta">
+              <div class="title-song">Clue 2</div>
+              <div class="sub">by Akshat Hatwal</div>
+            </div>
+          </div>
+          <div class="sub">Pyrotech Club</div>
+          <div class="added-by">
+            <div class="avatar">A</div> Akshat Hatwal
+          </div>
+          <div class="duration">2:06</div>
+          <button class="btn-play">▶</button>
+        </div>
+
+        <div class="tr" draggable="true" data-src="songs/song3.mp3">
+          <div class="muted">3</div>
+          <div class="td">
+            <div class="thumb"></div>
+            <div class="meta">
+              <div class="title-song">Clue 3</div>
+              <div class="sub">by Ran out of names</div>
+            </div>
+          </div>
+          <div class="sub">Another Clue</div>
+          <div class="added-by">
+            <div class="avatar">H</div> Hellobro1234
+          </div>
+          <div class="duration">3:27</div>
+          <button class="btn-play">▶</button>
+        </div>
+
+        <div class="tr" draggable="true" data-src="songs/song4.mp3">
+          <div class="muted">4</div>
+          <div class="td">
+            <div class="thumb"></div>
+            <div class="meta">
+              <div class="title-song">Clue 4</div>
+              <div class="sub">by HAHAHA</div>
+            </div>
+          </div>
+          <div class="sub">Coding</div>
+          <div class="added-by">
+            <div class="avatar">M</div> Minecostr
+          </div>
+          <div class="duration">3:27</div>
+          <button class="btn-play">▶</button>
+        </div>
+
+        <div class="tr" draggable="true" data-src="songs/song5.mp3">
+          <div class="muted">5</div>
+          <div class="td">
+            <div class="thumb"></div>
+            <div class="meta">
+              <div class="title-song">Clue 5</div>
+              <div class="sub">by CHINTU</div>
+            </div>
+          </div>
+          <div class="sub">Creating Website</div>
+          <div class="added-by">
+            <div class="avatar">R</div> Reg3
+          </div>
+          <div class="duration">3:27</div>
+          <button class="btn-play">▶</button>
+        </div>
+
+        <div class="tr" draggable="true" data-src="songs/song6.mp3">
+          <div class="muted">6</div>
+          <div class="td">
+            <div class="thumb"></div>
+            <div class="meta">
+              <div class="title-song">Clue 6</div>
+              <div class="sub">by Jeetu Bhaiya</div>
+            </div>
+          </div>
+          <div class="sub">Kota Factory</div>
+          <div class="added-by">
+            <div class="avatar">V</div> Vaibhav
+          </div>
+          <div class="duration">3:27</div>
+          <button class="btn-play">▶</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <audio id="audioPlayer"></audio>
+
+  <script>
+    const list = document.getElementById('songList');
+    let dragged;
+    const audio = document.getElementById("audioPlayer");
+    const buttons = document.querySelectorAll(".btn-play");
+
+    // Dragging functionality
+    list.addEventListener('dragstart', (e) => {
+      if (e.target.classList.contains('tr')) {
+        dragged = e.target;
+        e.dataTransfer.effectAllowed = 'move';
+        e.target.style.opacity = .5;
+      }
+    });
+
+    list.addEventListener('dragend', (e) => {
+      if (dragged) dragged.style.opacity = '';
+    });
+
+    list.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      const target = e.target.closest('.tr');
+      if (target && target !== dragged) {
+        const rect = target.getBoundingClientRect();
+        const next = (e.clientY - rect.top) / (rect.bottom - rect.top) > 0.5;
+        list.insertBefore(dragged, next ? target.nextSibling : target);
+      }
+    });
+
+    list.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dragged = null;
+      // reindex
+      [...list.querySelectorAll('.tr')].forEach((row, i) => {
+        row.querySelector('.muted').textContent = i + 1;
+      });
+    });
+
+    // Play button functionality
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const li = btn.closest(".tr");
+        const src = li.getAttribute("data-src");
+
+        if (audio.src.includes(src) && !audio.paused) {
+          audio.pause();
+          btn.textContent = "▶";
+        } else {
+          audio.src = src;
+          audio.play();
+          buttons.forEach(b => b.textContent = "▶");
+          btn.textContent = "⏸";
+        }
+      });
+    });
+  </script>
+</body>
+</html>
