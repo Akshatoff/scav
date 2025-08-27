@@ -9,68 +9,144 @@
     :root {
       --bg: #0b0b0f;
       --bg-elev: #16161d;
-      --text: #e5e7eb;
+      --text: #ffffff;
       --muted: #9da3af;
       --accent: #1ed760;
-      --accent-2: #22c55e;
-      --row: #14141a;
-      --row-hover: #22222b;
+      --row-hover: #1f1f28;
       --divider: #2a2a35;
     }
 
     * {
-      box-sizing: border-box
-    }
-
-    html,
-    body {
-      height: 100%
-    }
-
-    body {
+      box-sizing: border-box;
       margin: 0;
-      font: 14px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial;
-      color: var(--text);
+      padding: 0;
+    }
+
+    .sec {
+      color: gray;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
       background: var(--bg);
+      color: var(--text);
     }
 
     .app {
       max-width: 1100px;
       margin: 0 auto;
-      padding: 24px 24px 80px
+      padding-bottom: 100px;
     }
 
+    /* ---------- HEADER ---------- */
     .header {
       display: flex;
-      align-items: flex-end;
-      gap: 24px;
-      padding: 24px 0 12px
+      flex-direction: column;
+      align-items: center;
+      padding: 32px 16px 20px;
+      text-align: center;
     }
 
     .cover {
-      width: 88px;
-      height: 88px;
+      width: 180px;
+      height: 180px;
       border-radius: 12px;
-      overflow: hidden;
       background: linear-gradient(135deg, #ef4444, #f59e0b, #10b981, #3b82f6);
       display: grid;
       place-items: center;
-    }
-
-    .title-wrap {
-      flex: 1
+      margin-bottom: 18px;
     }
 
     .title {
-      font-size: clamp(22px, 3.6vw, 40px);
+      font-size: 24px;
       font-weight: 800;
+      margin-bottom: 6px;
     }
 
-    .controls {
+    /* ---------- SONG LIST ---------- */
+    .table {
+      margin-top: 10px;
+      border-top: 1px solid var(--divider);
+    }
+
+    .th,
+    .tr {
+      display: grid;
+      grid-template-columns: 30px 2fr 1.2fr 1.2fr 50px 40px;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .th {
+      color: var(--muted);
+      padding: 12px 8px;
+      font-size: 13px;
+    }
+
+    .tr {
+      padding: 10px 8px;
+      border-radius: 8px;
+      transition: background 0.2s;
+      cursor: grab;
+    }
+
+    .tr:hover {
+      background: var(--row-hover);
+    }
+
+    .td {
       display: flex;
       align-items: center;
-      gap: 16px;
-      margin: 18px 0 8px
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .thumb {
+      width: 40px;
+      height: 40px;
+      border-radius: 6px;
+      background: #111;
+      flex-shrink: 0;
+    }
+
+    .title-song {
+      font-weight: 600;
+      font-size: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .sub {
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .added-by {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .avatar {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #374151;
+      display: inline-grid;
+      place-items: center;
+      font-size: 10px;
+    }
+
+    .duration {
+      color: var(--muted);
+      font-size: 13px;
+      text-align: right;
     }
 
     .btn-play {
@@ -83,235 +159,400 @@
       place-items: center;
       cursor: pointer;
       font-size: 14px;
+      color: #000;
     }
 
-    .table {
-      margin-top: 10px;
-      border-top: 1px solid var(--divider)
+    /* ---------- MOBILE RESPONSIVE ---------- */
+    @media (max-width: 768px) {
+      .th {
+        display: none;
+      }
+
+      .tr {
+        grid-template-columns: 1fr auto auto;
+        padding: 12px 16px;
+      }
+
+      .tr>div:first-child {
+        display: none;
+      }
+
+      .album,
+      .added-by {
+        display: none;
+      }
+
+      .td {
+        gap: 10px;
+      }
+
+      .thumb {
+        width: 48px;
+        height: 48px;
+      }
+
+      .title-song {
+        font-size: 15px;
+      }
+
+      .btn-play {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+      }
     }
 
-    .th,
-    .tr {
-      display: grid;
-      grid-template-columns: 40px 1.8fr 1.3fr 1.2fr 60px 40px;
-      align-items: center;
-      gap: 10px
-    }
-
-    .th {
-      color: var(--muted);
-      padding: 12px 8px
-    }
-
-    .tr {
-      padding: 10px 8px;
-      border-radius: 8px;
-      position: relative;
-      cursor: grab;
-    }
-
-    .tr:hover {
-      background: var(--row-hover)
-    }
-
-    .td {
+    /* ---------- MINI PLAYER ---------- */
+    .mini-player {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--bg-elev);
+      padding: 10px 16px;
       display: flex;
       align-items: center;
-      gap: 14px;
-      min-width: 0
+      justify-content: space-between;
+      border-top: 1px solid var(--divider);
     }
 
-    .td .thumb {
-      width: 40px;
-      height: 40px;
-      border-radius: 6px;
-      overflow: hidden;
-      flex: 0 0 auto;
-      background: #111
-    }
-
-    .td .thumb img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover
-    }
-
-    .meta {
-      min-width: 0
-    }
-
-    .title-song {
-      font-weight: 600;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis
-    }
-
-    .sub {
-      color: var(--muted);
-      font-size: 12.5px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis
-    }
-
-    .added-by {
+    .mini-info {
       display: flex;
       align-items: center;
       gap: 10px;
-      color: var(--muted)
+      min-width: 0;
     }
 
-    .avatar {
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      background: #374151;
-      display: inline-grid;
-      place-items: center;
-      font-size: 11px
+    .mini-thumb {
+      width: 44px;
+      height: 44px;
+      border-radius: 6px;
+      background: #111;
+      flex-shrink: 0;
     }
 
-    .duration {
-      color: var(--muted)
+    .mini-meta {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .mini-title {
+      font-weight: 600;
+      font-size: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .mini-artist {
+      font-size: 12px;
+      color: var(--muted);
     }
   </style>
 </head>
 
 <body>
   <div class="app">
+    <!-- HEADER -->
     <div class="header">
       <div class="cover"></div>
-      <div class="title-wrap">
-        <div class="title">Hellobro1234 + 9 others</div>
-      </div>
+      <div class="title">Opus Operandi</div>
     </div>
 
-    <div class="table">
-      <div class="th">
-        <div class="muted">#</div>
-        <div class="muted">Title</div>
-        <div class="muted">Album</div>
-        <div class="muted">Added by</div>
-        <div class="muted" style="text-align:right; padding-right:8px">⏱</div>
-        <div class="muted">▶</div>
-      </div>
-      <div class="divider"></div>
-      <div id="songList">
-        <div class="tr" draggable="true" data-src="songs/song1.mp3">
-          <div class="muted">1</div>
-          <div class="td">
-            <div class="thumb"></div>
-            <div class="meta">
-              <div class="title-song">Clue 1</div>
-              <div class="sub">By The Goat</div>
-            </div>
-          </div>
-          <div class="sub">Assit Main Cab</div>
-          <div class="added-by">
-            <div class="avatar">A</div> Aditya Choithani
-          </div>
-          <div class="duration">3:10</div>
-          <button class="btn-play">▶</button>
-        </div>
-
-        <div class="tr" draggable="true" data-src="songs/song2.mp3">
-          <div class="muted">2</div>
-          <div class="td">
-            <div class="thumb"></div>
-            <div class="meta">
-              <div class="title-song">Clue 2</div>
-              <div class="sub">by Akshat Hatwal</div>
-            </div>
-          </div>
-          <div class="sub">Pyrotech Club</div>
-          <div class="added-by">
-            <div class="avatar">A</div> Akshat Hatwal
-          </div>
-          <div class="duration">2:06</div>
-          <button class="btn-play">▶</button>
-        </div>
-
-        <div class="tr" draggable="true" data-src="songs/song3.mp3">
-          <div class="muted">3</div>
-          <div class="td">
-            <div class="thumb"></div>
-            <div class="meta">
-              <div class="title-song">Clue 3</div>
-              <div class="sub">by Ran out of names</div>
-            </div>
-          </div>
-          <div class="sub">Another Clue</div>
-          <div class="added-by">
-            <div class="avatar">H</div> Hellobro1234
-          </div>
-          <div class="duration">3:27</div>
-          <button class="btn-play">▶</button>
-        </div>
-
-        <div class="tr" draggable="true" data-src="songs/song4.mp3">
-          <div class="muted">4</div>
-          <div class="td">
-            <div class="thumb"></div>
-            <div class="meta">
-              <div class="title-song">Clue 4</div>
-              <div class="sub">by HAHAHA</div>
-            </div>
-          </div>
-          <div class="sub">Coding</div>
-          <div class="added-by">
-            <div class="avatar">M</div> Minecostr
-          </div>
-          <div class="duration">3:27</div>
-          <button class="btn-play">▶</button>
-        </div>
-
-        <div class="tr" draggable="true" data-src="songs/song5.mp3">
-          <div class="muted">5</div>
-          <div class="td">
-            <div class="thumb"></div>
-            <div class="meta">
-              <div class="title-song">Clue 5</div>
-              <div class="sub">by CHINTU</div>
-            </div>
-          </div>
-          <div class="sub">Creating Website</div>
-          <div class="added-by">
-            <div class="avatar">R</div> Reg3
-          </div>
-          <div class="duration">3:27</div>
-          <button class="btn-play">▶</button>
-        </div>
-
-        <div class="tr" draggable="true" data-src="songs/song6.mp3">
-          <div class="muted">6</div>
-          <div class="td">
-            <div class="thumb"></div>
-            <div class="meta">
-              <div class="title-song">Clue 6</div>
-              <div class="sub">by Jeetu Bhaiya</div>
-            </div>
-          </div>
-          <div class="sub">Kota Factory</div>
-          <div class="added-by">
-            <div class="avatar">V</div> Vaibhav
-          </div>
-          <div class="duration">3:27</div>
-          <button class="btn-play">▶</button>
-        </div>
-      </div>
-    </div>
+    <!-- SONG LIST -->
+    <div class="table" id="songList">
+  <div class="th">
+    <div>#</div>
+    <div>Title</div>
+    <div>Album</div>
+    <div>Added by</div>
+    <div>⏱</div>
+    <div>▶</div>
   </div>
 
+  <div class="tr" draggable="true" data-src="songs/song1.mp3">
+    <div class="muted">1</div>
+    <div class="td">
+      <div class="thumb"></div>
+      <div>
+        <div class="title-song">Nocturne in E minor, Op. 1</div>
+        <div class="sub">By Frédéric Chopin</div>
+      </div>
+    </div>
+    <div class="album sub">Opus Operandi</div>
+    <div class="added-by"><div class="avatar">C</div>Chopin</div>
+    <div class="duration">3:10</div>
+    <button class="btn-play">▶</button>
+  </div>
+
+  <div class="tr" draggable="true" data-src="songs/song2.mp3">
+    <div class="muted">2</div>
+    <div class="td">
+      <div class="thumb"></div>
+      <div>
+        <div class="title-song">Overture, Op. 2</div>
+        <div class="sub">By Anton Rubinstein</div>
+      </div>
+    </div>
+    <div class="album sub">Opus Operandi</div>
+    <div class="added-by"><div class="avatar">R</div>Rubinstein</div>
+    <div class="duration">4:21</div>
+    <button class="btn-play">▶</button>
+  </div>
+
+  <div class="tr" draggable="true" data-src="songs/song3.mp3">
+    <div class="muted">3</div>
+    <div class="td">
+      <div class="thumb"></div>
+      <div>
+        <div class="title-song">Serenade, Op. 3</div>
+        <div class="sub">By Richard Strauss</div>
+      </div>
+    </div>
+    <div class="album sub">Opus Operandi</div>
+    <div class="added-by"><div class="avatar">S</div>Strauss</div>
+    <div class="duration">2:59</div>
+    <button class="btn-play">▶</button>
+  </div>
+
+  <div class="tr" draggable="true" data-src="songs/song4.mp3">
+    <div class="muted">4</div>
+    <div class="td">
+      <div class="thumb"></div>
+      <div>
+        <div class="title-song">Elegy, Op. 4</div>
+        <div class="sub">By Edward Elgar</div>
+      </div>
+    </div>
+    <div class="album sub">Opus Operandi</div>
+    <div class="added-by"><div class="avatar">E</div>Elgar</div>
+    <div class="duration">3:32</div>
+    <button class="btn-play">▶</button>
+  </div>
+
+  <div class="tr" draggable="true" data-src="songs/song5.mp3">
+    <div class="muted">5</div>
+    <div class="td">
+      <div class="thumb"></div>
+      <div>
+        <div class="title-song">Valse, Op. 5</div>
+        <div class="sub">By Sergei Rachmaninoff</div>
+      </div>
+    </div>
+    <div class="album sub">Opus Operandi</div>
+    <div class="added-by"><div class="avatar">R</div>Rachmaninoff</div>
+    <div class="duration">5:01</div>
+    <button class="btn-play">▶</button>
+  </div>
+
+  <div class="tr" draggable="true" data-src="songs/song6.mp3">
+    <div class="muted">6</div>
+    <div class="td">
+      <div class="thumb"></div>
+      <div>
+        <div class="title-song">Élégie, Op. 6</div>
+        <div class="sub">By Jules Massenet</div>
+      </div>
+    </div>
+    <div class="album sub">Opus Operandi</div>
+    <div class="added-by"><div class="avatar">M</div>Massenet</div>
+    <div class="duration">3:47</div>
+    <button class="btn-play">▶</button>
+  </div>
+
+  <div class="tr" draggable="true" data-src="songs/song7.mp3">
+    <div class="muted">7</div>
+    <div class="td">
+      <div class="thumb"></div>
+      <div>
+        <div class="title-song">Niederwald" <span class="sec">Lower Forest</span>, Op. 7</div>
+        <div class="sub">By Antonín Dvořák</div>
+      </div>
+    </div>
+    <div class="album sub">Opus Operandi</div>
+    <div class="added-by"><div class="avatar">D</div>Dvořák</div>
+    <div class="duration">4:12</div>
+    <button class="btn-play">▶</button>
+  </div>
+
+  <div class="tr" draggable="true" data-src="songs/song8.mp3">
+    <div class="muted">8</div>
+    <div class="td">
+      <div class="thumb"></div>
+      <div>
+        <div class="title-song">Piano Quartet, Op. 8</div>
+        <div class="sub">By Johannes Brahms</div>
+      </div>
+    </div>
+    <div class="album sub">Opus Operandi</div>
+    <div class="added-by"><div class="avatar">B</div>Brahms</div>
+    <div class="duration">6:08</div>
+    <button class="btn-play">▶</button>
+  </div>
+
+  <div class="tr" draggable="true" data-src="songs/song9.mp3">
+    <div class="muted">9</div>
+    <div class="td">
+      <div class="thumb"></div>
+      <div>
+        <div class="title-song">Scherzo, Op. 9</div>
+        <div class="sub">By Felix Mendelssohn</div>
+      </div>
+    </div>
+    <div class="album sub">Opus Operandi</div>
+    <div class="added-by"><div class="avatar">M</div>Mendelssohn</div>
+    <div class="duration">3:44</div>
+    <button class="btn-play">▶</button>
+  </div>
+
+  <div class="tr" draggable="true" data-src="songs/song10.mp3">
+    <div class="muted">10</div>
+    <div class="td">
+      <div class="thumb"></div>
+      <div>
+        <div class="title-song">Romance, Op. 10</div>
+        <div class="sub">By Pyotr Ilyich Tchaikovsky</div>
+      </div>
+    </div>
+    <div class="album sub">Opus Operandi</div>
+    <div class="added-by"><div class="avatar">T</div>Tchaikovsky</div>
+    <div class="duration">4:05</div>
+    <button class="btn-play">▶</button>
+  </div>
+
+  <div class="tr" draggable="true" data-src="songs/song11.mp3">
+    <div class="muted">11</div>
+    <div class="td">
+      <div class="thumb"></div>
+      <div>
+        <div class="title-song">Ballade, Op. 11</div>
+        <div class="sub">By Johannes Brahms</div>
+      </div>
+    </div>
+    <div class="album sub">Opus Operandi</div>
+    <div class="added-by"><div class="avatar">B</div>Brahms</div>
+    <div class="duration">5:15</div>
+    <button class="btn-play">▶</button>
+  </div>
+
+  <div class="tr" draggable="true" data-src="songs/song12.mp3">
+    <div class="muted">12</div>
+    <div class="td">
+      <div class="thumb"></div>
+      <div>
+        <div class="title-song">Capriccio, Op. 12</div>
+        <div class="sub">By Robert Schumann</div>
+      </div>
+    </div>
+    <div class="album sub">Opus Operandi</div>
+    <div class="added-by"><div class="avatar">S</div>Schumann</div>
+    <div class="duration">3:38</div>
+    <button class="btn-play">▶</button>
+  </div>
+
+  <div class="tr" draggable="true" data-src="songs/song13.mp3">
+    <div class="muted">13</div>
+    <div class="td">
+      <div class="thumb"></div>
+      <div>
+        <div class="title-song">Fantasie, Op. 13</div>
+        <div class="sub">By Alexander Scriabin</div>
+      </div>
+    </div>
+    <div class="album sub">Opus Operandi</div>
+    <div class="added-by"><div class="avatar">S</div>Scriabin</div>
+    <div class="duration">6:27</div>
+    <button class="btn-play">▶</button>
+  </div>
+
+  <div class="tr" draggable="true" data-src="songs/song14.mp3">
+    <div class="muted">14</div>
+    <div class="td">
+      <div class="thumb"></div>
+      <div>
+        <div class="title-song">Intermezzo, Op. 14</div>
+        <div class="sub">By Franz Schubert</div>
+      </div>
+    </div>
+    <div class="album sub">Opus Operandi</div>
+    <div class="added-by"><div class="avatar">S</div>Schubert</div>
+    <div class="duration">3:22</div>
+    <button class="btn-play">▶</button>
+  </div>
+
+  <div class="tr" draggable="true" data-src="songs/song15.mp3">
+    <div class="muted">15</div>
+    <div class="td">
+      <div class="thumb"></div>
+      <div>
+        <div class="title-song">Mazurka, Op. 15</div>
+        <div class="sub">By Frédéric Chopin</div>
+      </div>
+    </div>
+    <div class="album sub">Opus Operandi</div>
+    <div class="added-by"><div class="avatar">C</div>Chopin</div>
+    <div class="duration">4:09</div>
+    <button class="btn-play">▶</button>
+  </div>
+
+  <div class="tr" draggable="true" data-src="songs/song16.mp3">
+    <div class="muted">16</div>
+    <div class="td">
+      <div class="thumb"></div>
+      <div>
+        <div class="title-song">Polonaise, Op. 16</div>
+        <div class="sub">By Henryk Wieniawski</div>
+      </div>
+    </div>
+    <div class="album sub">Opus Operandi</div>
+    <div class="added-by"><div class="avatar">W</div>Wieniawski</div>
+    <div class="duration">5:35</div>
+    <button class="btn-play">▶</button>
+  </div>
+
+  <div class="tr" draggable="true" data-src="songs/song17.mp3">
+    <div class="muted">17</div>
+    <div class="td">
+      <div class="thumb"></div>
+      <div>
+        <div class="title-song">Rhapsodie, Op. 17</div>
+        <div class="sub">By Franz Liszt</div>
+      </div>
+    </div>
+    <div class="album sub">Opus Operandi</div>
+    <div class="added-by"><div class="avatar">L</div>Liszt</div>
+    <div class="duration">7:01</div>
+    <button class="btn-play">▶</button>
+  </div>
+</div>
+  </div>
+
+  <!-- AUDIO + MINI PLAYER -->
   <audio id="audioPlayer"></audio>
+  <div class="mini-player" id="miniPlayer" style="display:none;">
+    <div class="mini-info">
+      <div class="mini-thumb"></div>
+      <div class="mini-meta">
+        <div class="mini-title" id="miniTitle">Song</div>
+        <div class="mini-artist" id="miniArtist">Artist</div>
+      </div>
+    </div>
+    <button class="btn-play" id="miniBtn">⏸</button>
+  </div>
 
   <script>
     const list = document.getElementById('songList');
     let dragged;
     const audio = document.getElementById("audioPlayer");
+    const mini = document.getElementById("miniPlayer");
+    const miniTitle = document.getElementById("miniTitle");
+    const miniArtist = document.getElementById("miniArtist");
+    const miniBtn = document.getElementById("miniBtn");
+
     const buttons = document.querySelectorAll(".btn-play");
 
-    // Dragging functionality
+    // drag reorder
     list.addEventListener('dragstart', (e) => {
       if (e.target.classList.contains('tr')) {
         dragged = e.target;
@@ -319,46 +560,57 @@
         e.target.style.opacity = .5;
       }
     });
-
-    list.addEventListener('dragend', (e) => {
-      if (dragged) dragged.style.opacity = '';
-    });
-
+    list.addEventListener('dragend', () => { if (dragged) dragged.style.opacity = ''; });
     list.addEventListener('dragover', (e) => {
       e.preventDefault();
       const target = e.target.closest('.tr');
       if (target && target !== dragged) {
         const rect = target.getBoundingClientRect();
-        const next = (e.clientY - rect.top) / (rect.bottom - rect.top) > 0.5;
+        const next = (e.clientY - rect.top) / rect.height > 0.5;
         list.insertBefore(dragged, next ? target.nextSibling : target);
       }
     });
-
-    list.addEventListener('drop', (e) => {
-      e.preventDefault();
+    list.addEventListener('drop', () => {
       dragged = null;
-      // reindex
       [...list.querySelectorAll('.tr')].forEach((row, i) => {
         row.querySelector('.muted').textContent = i + 1;
       });
     });
 
-    // Play button functionality
+    // play/pause logic
     buttons.forEach((btn) => {
       btn.addEventListener("click", () => {
-        const li = btn.closest(".tr");
-        const src = li.getAttribute("data-src");
+        const row = btn.closest(".tr");
+        const src = row.getAttribute("data-src");
+        const title = row.querySelector(".title-song").textContent;
+        const artist = row.querySelector(".sub").textContent;
 
         if (audio.src.includes(src) && !audio.paused) {
           audio.pause();
           btn.textContent = "▶";
+          miniBtn.textContent = "▶";
         } else {
           audio.src = src;
           audio.play();
           buttons.forEach(b => b.textContent = "▶");
           btn.textContent = "⏸";
+          miniBtn.textContent = "⏸";
+          mini.style.display = "flex";
+          miniTitle.textContent = title;
+          miniArtist.textContent = artist;
         }
       });
+    });
+
+    // mini-player controls
+    miniBtn.addEventListener("click", () => {
+      if (audio.paused) {
+        audio.play();
+        miniBtn.textContent = "⏸";
+      } else {
+        audio.pause();
+        miniBtn.textContent = "▶";
+      }
     });
   </script>
 </body>
