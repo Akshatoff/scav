@@ -15,7 +15,8 @@
     }
 
     .sec {
-      color: rgb(203, 203, 203);
+      display: none;
+
     }
 
     body {
@@ -321,6 +322,7 @@
 
     .brid {
       color: #c34040 !important;
+      display: inline;
     }
 
     #imgPopup {
