@@ -1,4 +1,3 @@
-
     :root {
       --bg: #0b0b0f;
       --bg-elev: #16161d;
@@ -85,7 +84,7 @@
     }
 
     .tr:hover {
-      background: var(--row-hover);
+      /* background: var(--row-hover); */
     }
 
     .td {
@@ -128,6 +127,15 @@
     #antonin {
       background: url("https://imgs.search.brave.com/C8erA_J9_XNR_c6tCTIIonyl5hOBXzd7uWwV1c-c_RI/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly93d3cu/cnBvLmNvLnVrL2lt/YWdlcy9kdm9yYWtf/ZmFjdHMuanBn");
       background-size: cover;
+    }
+    #antoniny {
+      background: url("https://imgs.search.brave.com/C8erA_J9_XNR_c6tCTIIonyl5hOBXzd7uWwV1c-c_RI/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly93d3cu/cnBvLmNvLnVrL2lt/YWdlcy9kdm9yYWtf/ZmFjdHMuanBn");
+      background-size: cover;
+    }
+
+    .dfh {
+      background:url("../image.png") !important;
+      background-size: cover !important;
     }
 #jules {
       background: url("https://imgs.search.brave.com/2lmnbc8hJBDtTjDhfzvIANeRj-xcWxdMmRAFtNFKUNo/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvY29tbW9ucy9j/L2M4L0p1bGVzX01h/c3NlbmV0X3BvcnRy/YWl0LmpwZw");
@@ -304,3 +312,22 @@
     .correct {
       background: rgba(30, 215, 96, 0.15); /* Spotify green tint */
     }
+
+    @media screen and (max-width: 700px) {
+      .des {
+        width: 20rem;
+      }
+    }
+
+    .brid {
+      color: #c34040 !important;
+    }
+
+    #imgPopup {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
